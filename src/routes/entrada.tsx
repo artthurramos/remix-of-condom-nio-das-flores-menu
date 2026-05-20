@@ -89,7 +89,9 @@ function EntradaPage() {
             </span>
           </div>
         )}
+        </div>
       </div>
     </main>
+
   );
 }
