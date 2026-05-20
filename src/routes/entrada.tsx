@@ -36,9 +36,19 @@ function EntradaPage() {
   const [selecionado, setSelecionado] = useState<Tipo | null>(null);
 
   return (
-    <main className="relative min-h-screen bg-neutral-900 text-white">
-      <BackToMenu />
-      <div className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-6 py-24 text-center">
+    <main className="relative min-h-screen overflow-hidden bg-neutral-900 text-white">
+      <img
+        src={entradaBg}
+        alt="Entrada do Condomínio das Flores"
+        className="absolute inset-0 h-full w-full object-cover"
+        width={1920}
+        height={1080}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/85 via-neutral-950/70 to-neutral-950/90" />
+      <div className="relative z-10">
+        <BackToMenu />
+        <div className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-6 py-24 text-center">
+
         <p className="text-[11px] tracking-[0.35em] text-white/60">ACESSO PRINCIPAL</p>
         <h1 className="mt-2 font-serif text-5xl">Entrada</h1>
         <p className="mt-4 max-w-md text-white/75">
