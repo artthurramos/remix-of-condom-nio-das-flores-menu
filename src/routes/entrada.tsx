@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BackToMenu } from "@/components/BackToMenu";
 import { Home, UserRound, Wrench, Check } from "lucide-react";
 import { useState } from "react";
+import entradaBg from "@/assets/entrada-bg.jpg";
+
 
 export const Route = createFileRoute("/entrada")({
   component: EntradaPage,
