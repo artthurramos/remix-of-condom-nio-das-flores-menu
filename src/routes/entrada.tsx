@@ -376,6 +376,27 @@ function Campo({
 /* ---------- Prestador ---------- */
 
 type CategoriaPrestador = "entregas" | "servicos";
+type TipoEntrega = "encomendas" | "comida";
+
+type EncomendaSimulada = {
+  id: string;
+  remetente: string;
+  descricao: string;
+  prazo: string;
+};
+
+function gerarEncomendasSimuladas(bloco: string, andar: string, apto: string): EncomendaSimulada[] {
+  const chave = `${bloco}-${andar}-${apto}`.toLowerCase();
+  const base: EncomendaSimulada[] = [
+    { id: "1", remetente: "Mercado Livre", descricao: "Caixa média · Eletrônico", prazo: "Hoje" },
+    { id: "2", remetente: "Amazon", descricao: "Envelope · Livro", prazo: "Amanhã" },
+    { id: "3", remetente: "Shopee", descricao: "Pacote pequeno · Acessório", prazo: "Em 3 dias" },
+    { id: "4", remetente: "Magalu", descricao: "Caixa grande · Eletrodoméstico", prazo: "Em 5 dias" },
+  ];
+  // pseudo-variação por apartamento
+  const n = (chave.charCodeAt(0) || 65) % 3;
+  return base.slice(0, 2 + n);
+}
 
 function FluxoPrestador({ onClose }: { onClose: () => void }) {
   const [cat, setCat] = useState<CategoriaPrestador | null>(null);
@@ -387,7 +408,7 @@ function FluxoPrestador({ onClose }: { onClose: () => void }) {
 
   return (
     <Painel titulo="Prestador de Serviço" onClose={onClose}>
-      {!cat ? (
+      {!cat && (
         <>
           <p className="mb-5 text-sm text-white/70">Selecione a categoria do atendimento.</p>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -404,13 +425,14 @@ function FluxoPrestador({ onClose }: { onClose: () => void }) {
             ))}
           </div>
         </>
-      ) : (
+      )}
+
+      {cat === "entregas" && <FluxoEntregas onVoltar={() => setCat(null)} />}
+
+      {cat === "servicos" && (
         <div className="grid gap-4 text-center">
           <p className="text-sm text-white/70">
-            Categoria selecionada:{" "}
-            <span className="font-serif text-base text-white">
-              {opcoesCat.find((o) => o.id === cat)?.label}
-            </span>
+            Categoria selecionada: <span className="font-serif text-base text-white">Serviços</span>
           </p>
           <div className="rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-5 py-4 text-emerald-200">
             Acesso encaminhado à portaria. Aguarde liberação.
@@ -424,5 +446,248 @@ function FluxoPrestador({ onClose }: { onClose: () => void }) {
         </div>
       )}
     </Painel>
+  );
+}
+
+/* ---------- Entregas (encomendas + comida) ---------- */
+
+function FluxoEntregas({ onVoltar }: { onVoltar: () => void }) {
+  const [tipo, setTipo] = useState<TipoEntrega | null>(null);
+
+  if (!tipo) {
+    return (
+      <>
+        <p className="mb-5 text-sm text-white/70">Qual é o tipo de entrega?</p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <button
+            onClick={() => setTipo("encomendas")}
+            className="flex flex-col items-center rounded-2xl border border-white/15 bg-white/5 p-8 text-center transition hover:border-white/40 hover:bg-white/10"
+          >
+            <Boxes className="h-10 w-10 text-white/85" />
+            <h4 className="mt-4 font-serif text-xl">Encomendas</h4>
+            <p className="mt-1 text-xs text-white/60">Pacotes e mercadorias.</p>
+          </button>
+          <button
+            onClick={() => setTipo("comida")}
+            className="flex flex-col items-center rounded-2xl border border-white/15 bg-white/5 p-8 text-center transition hover:border-white/40 hover:bg-white/10"
+          >
+            <UtensilsCrossed className="h-10 w-10 text-white/85" />
+            <h4 className="mt-4 font-serif text-xl">Comida</h4>
+            <p className="mt-1 text-xs text-white/60">Restaurantes e delivery.</p>
+          </button>
+        </div>
+        <button
+          onClick={onVoltar}
+          className="mx-auto mt-6 inline-flex items-center gap-2 text-xs text-white/60 transition hover:text-white"
+        >
+          <ArrowLeft className="h-3 w-3" /> Trocar categoria
+        </button>
+      </>
+    );
+  }
+
+  return tipo === "encomendas" ? (
+    <FluxoEncomendas onVoltar={() => setTipo(null)} />
+  ) : (
+    <FluxoComida onVoltar={() => setTipo(null)} />
+  );
+}
+
+/* ---------- Encomendas ---------- */
+
+function FluxoEncomendas({ onVoltar }: { onVoltar: () => void }) {
+  const [bloco, setBloco] = useState("");
+  const [andar, setAndar] = useState("");
+  const [apto, setApto] = useState("");
+  const [lista, setLista] = useState<EncomendaSimulada[] | null>(null);
+  const [escolhida, setEscolhida] = useState<EncomendaSimulada | null>(null);
+  const [notificado, setNotificado] = useState(false);
+
+  const buscar = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bloco || !andar || !apto) return;
+    setLista(gerarEncomendasSimuladas(bloco, andar, apto));
+  };
+
+  const confirmar = (enc: EncomendaSimulada) => {
+    setEscolhida(enc);
+    setNotificado(true);
+    falar("Notificação enviada ao morador. Porteiro irá receber a encomenda.");
+  };
+
+  if (notificado && escolhida) {
+    return (
+      <div className="grid gap-4 text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300">
+          <BellRing className="h-6 w-6" />
+        </div>
+        <p className="font-serif text-xl">Morador notificado</p>
+        <p className="text-sm text-white/70">
+          Encomenda <span className="text-white">{escolhida.remetente}</span> ·{" "}
+          {escolhida.descricao} para o{" "}
+          <span className="text-white">
+            Bloco {bloco} · {andar}º · Apto {apto}
+          </span>
+          .
+        </p>
+        <div className="rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-5 py-4 text-emerald-200">
+          Notificação enviada ao celular do morador. O porteiro receberá a encomenda.
+        </div>
+        <button
+          onClick={onVoltar}
+          className="mx-auto inline-flex items-center gap-2 text-xs text-white/60 transition hover:text-white"
+        >
+          <ArrowLeft className="h-3 w-3" /> Nova entrega
+        </button>
+      </div>
+    );
+  }
+
+  if (lista) {
+    return (
+      <div className="grid gap-4">
+        <p className="text-sm text-white/70">
+          Encomendas previstas para o{" "}
+          <span className="text-white">
+            Bloco {bloco} · {andar}º · Apto {apto}
+          </span>{" "}
+          nos próximos dias:
+        </p>
+        <ul className="grid gap-2">
+          {lista.map((enc) => (
+            <li
+              key={enc.id}
+              className="flex items-center justify-between gap-3 rounded-xl border border-white/15 bg-white/5 px-4 py-3"
+            >
+              <div className="text-left">
+                <p className="font-serif text-base text-white">{enc.remetente}</p>
+                <p className="text-xs text-white/60">{enc.descricao}</p>
+                <p className="mt-1 inline-flex items-center gap-1 text-[11px] text-white/50">
+                  <CalendarDays className="h-3 w-3" /> {enc.prazo}
+                </p>
+              </div>
+              <button
+                onClick={() => confirmar(enc)}
+                className="rounded-full border border-white/30 bg-white px-4 py-1.5 text-xs font-medium text-neutral-900 transition hover:bg-white/90"
+              >
+                É esta
+              </button>
+            </li>
+          ))}
+        </ul>
+        <button
+          onClick={() => setLista(null)}
+          className="mx-auto inline-flex items-center gap-2 text-xs text-white/60 transition hover:text-white"
+        >
+          <ArrowLeft className="h-3 w-3" /> Corrigir endereço
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={buscar} className="grid gap-4">
+      <p className="text-sm text-white/70">
+        Informe o endereço do morador que solicitou a entrega.
+      </p>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Campo label="Bloco" value={bloco} onChange={setBloco} placeholder="Ex: A" />
+        <Campo label="Andar" value={andar} onChange={setAndar} placeholder="Ex: 5" />
+        <Campo label="Apartamento" value={apto} onChange={setApto} placeholder="Ex: 503" />
+      </div>
+      <div className="flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={onVoltar}
+          className="inline-flex items-center gap-2 text-xs text-white/60 transition hover:text-white"
+        >
+          <ArrowLeft className="h-3 w-3" /> Voltar
+        </button>
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white px-5 py-2.5 text-sm font-medium text-neutral-900 transition hover:bg-white/90"
+        >
+          Ver encomendas previstas
+        </button>
+      </div>
+    </form>
+  );
+}
+
+/* ---------- Comida ---------- */
+
+function FluxoComida({ onVoltar }: { onVoltar: () => void }) {
+  const [bloco, setBloco] = useState("");
+  const [andar, setAndar] = useState("");
+  const [apto, setApto] = useState("");
+  const [enviado, setEnviado] = useState(false);
+  const [chamando, setChamando] = useState(false);
+
+  const enviar = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bloco || !andar || !apto) return;
+    setEnviado(true);
+  };
+
+  const interfonar = () => {
+    setChamando(true);
+    falar(`Chamando interfone do apartamento ${apto}, bloco ${bloco}.`);
+    setTimeout(() => setChamando(false), 2500);
+  };
+
+  if (!enviado) {
+    return (
+      <form onSubmit={enviar} className="grid gap-4">
+        <p className="text-sm text-white/70">
+          Informe o endereço de entrega da comida.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Campo label="Bloco" value={bloco} onChange={setBloco} placeholder="Ex: A" />
+          <Campo label="Andar" value={andar} onChange={setAndar} placeholder="Ex: 5" />
+          <Campo label="Apartamento" value={apto} onChange={setApto} placeholder="Ex: 503" />
+        </div>
+        <div className="flex items-center justify-between gap-3">
+          <button
+            type="button"
+            onClick={onVoltar}
+            className="inline-flex items-center gap-2 text-xs text-white/60 transition hover:text-white"
+          >
+            <ArrowLeft className="h-3 w-3" /> Voltar
+          </button>
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white px-5 py-2.5 text-sm font-medium text-neutral-900 transition hover:bg-white/90"
+          >
+            Continuar
+          </button>
+        </div>
+      </form>
+    );
+  }
+
+  return (
+    <div className="grid gap-4 text-center">
+      <p className="text-sm text-white/70">
+        Entrega para o{" "}
+        <span className="text-white">
+          Bloco {bloco} · {andar}º · Apto {apto}
+        </span>
+        .
+      </p>
+      <button
+        onClick={interfonar}
+        disabled={chamando}
+        className="mx-auto inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-6 py-3 text-emerald-200 transition hover:bg-emerald-500/25 disabled:opacity-60"
+      >
+        <Phone className={`h-4 w-4 ${chamando ? "animate-pulse" : ""}`} />
+        {chamando ? "Chamando interfone..." : "Interfonar para o apartamento"}
+      </button>
+      <button
+        onClick={onVoltar}
+        className="mx-auto inline-flex items-center gap-2 text-xs text-white/60 transition hover:text-white"
+      >
+        <ArrowLeft className="h-3 w-3" /> Nova entrega
+      </button>
+    </div>
   );
 }
