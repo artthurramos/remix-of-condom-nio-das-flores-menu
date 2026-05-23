@@ -11,6 +11,11 @@ import {
   Package,
   Hammer,
   ArrowLeft,
+  Boxes,
+  UtensilsCrossed,
+  Phone,
+  BellRing,
+  CalendarDays,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import entradaBg from "@/assets/entrada-bg.jpg";
