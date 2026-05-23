@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as MapaRouteImport } from './routes/mapa'
+import { Route as LavanderiaRouteImport } from './routes/lavanderia'
 import { Route as EntradaRouteImport } from './routes/entrada'
 import { Route as EdificiosRouteImport } from './routes/edificios'
 import { Route as ChoupanasRouteImport } from './routes/choupanas'
@@ -27,6 +28,11 @@ const MenuRoute = MenuRouteImport.update({
 const MapaRoute = MapaRouteImport.update({
   id: '/mapa',
   path: '/mapa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LavanderiaRoute = LavanderiaRouteImport.update({
+  id: '/lavanderia',
+  path: '/lavanderia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EntradaRoute = EntradaRouteImport.update({
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
+  '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
+  '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
+  '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/choupanas'
     | '/edificios'
     | '/entrada'
+    | '/lavanderia'
     | '/mapa'
     | '/menu'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/choupanas'
     | '/edificios'
     | '/entrada'
+    | '/lavanderia'
     | '/mapa'
     | '/menu'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/choupanas'
     | '/edificios'
     | '/entrada'
+    | '/lavanderia'
     | '/mapa'
     | '/menu'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,7 @@ export interface RootRouteChildren {
   ChoupanasRoute: typeof ChoupanasRoute
   EdificiosRoute: typeof EdificiosRoute
   EntradaRoute: typeof EntradaRoute
+  LavanderiaRoute: typeof LavanderiaRoute
   MapaRoute: typeof MapaRoute
   MenuRoute: typeof MenuRoute
 }
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/mapa'
       fullPath: '/mapa'
       preLoaderRoute: typeof MapaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lavanderia': {
+      id: '/lavanderia'
+      path: '/lavanderia'
+      fullPath: '/lavanderia'
+      preLoaderRoute: typeof LavanderiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/entrada': {
@@ -223,6 +243,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChoupanasRoute: ChoupanasRoute,
   EdificiosRoute: EdificiosRoute,
   EntradaRoute: EntradaRoute,
+  LavanderiaRoute: LavanderiaRoute,
   MapaRoute: MapaRoute,
   MenuRoute: MenuRoute,
 }
