@@ -13,6 +13,7 @@ import { Route as MenuRouteImport } from './routes/menu'
 import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as EntradaRouteImport } from './routes/entrada'
 import { Route as EdificiosRouteImport } from './routes/edificios'
+import { Route as ChoupanasRouteImport } from './routes/choupanas'
 import { Route as AcessibilidadeRouteImport } from './routes/acessibilidade'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +37,11 @@ const EdificiosRoute = EdificiosRouteImport.update({
   path: '/edificios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChoupanasRoute = ChoupanasRouteImport.update({
+  id: '/choupanas',
+  path: '/choupanas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AcessibilidadeRoute = AcessibilidadeRouteImport.update({
   id: '/acessibilidade',
   path: '/acessibilidade',
@@ -50,6 +56,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
   '/mapa': typeof MapaRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
   '/mapa': typeof MapaRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
   '/mapa': typeof MapaRoute
@@ -77,16 +86,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/acessibilidade'
+    | '/choupanas'
     | '/edificios'
     | '/entrada'
     | '/mapa'
     | '/menu'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/acessibilidade' | '/edificios' | '/entrada' | '/mapa' | '/menu'
+  to:
+    | '/'
+    | '/acessibilidade'
+    | '/choupanas'
+    | '/edificios'
+    | '/entrada'
+    | '/mapa'
+    | '/menu'
   id:
     | '__root__'
     | '/'
     | '/acessibilidade'
+    | '/choupanas'
     | '/edificios'
     | '/entrada'
     | '/mapa'
@@ -96,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcessibilidadeRoute: typeof AcessibilidadeRoute
+  ChoupanasRoute: typeof ChoupanasRoute
   EdificiosRoute: typeof EdificiosRoute
   EntradaRoute: typeof EntradaRoute
   MapaRoute: typeof MapaRoute
@@ -132,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EdificiosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/choupanas': {
+      id: '/choupanas'
+      path: '/choupanas'
+      fullPath: '/choupanas'
+      preLoaderRoute: typeof ChoupanasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/acessibilidade': {
       id: '/acessibilidade'
       path: '/acessibilidade'
@@ -152,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcessibilidadeRoute: AcessibilidadeRoute,
+  ChoupanasRoute: ChoupanasRoute,
   EdificiosRoute: EdificiosRoute,
   EntradaRoute: EntradaRoute,
   MapaRoute: MapaRoute,
