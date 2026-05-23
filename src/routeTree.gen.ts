@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SalaoGourmetRouteImport } from './routes/salao-gourmet'
+import { Route as QuadrasRouteImport } from './routes/quadras'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as LavanderiaRouteImport } from './routes/lavanderia'
@@ -26,6 +27,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const SalaoGourmetRoute = SalaoGourmetRouteImport.update({
   id: '/salao-gourmet',
   path: '/salao-gourmet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuadrasRoute = QuadrasRouteImport.update({
+  id: '/quadras',
+  path: '/quadras',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenuRoute = MenuRouteImport.update({
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
+  '/quadras': typeof QuadrasRoute
   '/salao-gourmet': typeof SalaoGourmetRoute
 }
 export interface FileRoutesByTo {
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
+  '/quadras': typeof QuadrasRoute
   '/salao-gourmet': typeof SalaoGourmetRoute
 }
 export interface FileRoutesById {
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
+  '/quadras': typeof QuadrasRoute
   '/salao-gourmet': typeof SalaoGourmetRoute
 }
 export interface FileRouteTypes {
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/lavanderia'
     | '/mapa'
     | '/menu'
+    | '/quadras'
     | '/salao-gourmet'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/lavanderia'
     | '/mapa'
     | '/menu'
+    | '/quadras'
     | '/salao-gourmet'
   id:
     | '__root__'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/lavanderia'
     | '/mapa'
     | '/menu'
+    | '/quadras'
     | '/salao-gourmet'
   fileRoutesById: FileRoutesById
 }
@@ -196,6 +208,7 @@ export interface RootRouteChildren {
   LavanderiaRoute: typeof LavanderiaRoute
   MapaRoute: typeof MapaRoute
   MenuRoute: typeof MenuRoute
+  QuadrasRoute: typeof QuadrasRoute
   SalaoGourmetRoute: typeof SalaoGourmetRoute
 }
 
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/salao-gourmet'
       fullPath: '/salao-gourmet'
       preLoaderRoute: typeof SalaoGourmetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quadras': {
+      id: '/quadras'
+      path: '/quadras'
+      fullPath: '/quadras'
+      preLoaderRoute: typeof QuadrasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/menu': {
@@ -308,6 +328,7 @@ const rootRouteChildren: RootRouteChildren = {
   LavanderiaRoute: LavanderiaRoute,
   MapaRoute: MapaRoute,
   MenuRoute: MenuRoute,
+  QuadrasRoute: QuadrasRoute,
   SalaoGourmetRoute: SalaoGourmetRoute,
 }
 export const routeTree = rootRouteImport
