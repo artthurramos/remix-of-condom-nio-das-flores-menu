@@ -14,6 +14,7 @@ import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as EntradaRouteImport } from './routes/entrada'
 import { Route as EdificiosRouteImport } from './routes/edificios'
 import { Route as ChoupanasRouteImport } from './routes/choupanas'
+import { Route as BrinquedotecaRouteImport } from './routes/brinquedoteca'
 import { Route as AcessibilidadeRouteImport } from './routes/acessibilidade'
 import { Route as AcademiaRouteImport } from './routes/academia'
 import { Route as IndexRouteImport } from './routes/index'
@@ -43,6 +44,11 @@ const ChoupanasRoute = ChoupanasRouteImport.update({
   path: '/choupanas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrinquedotecaRoute = BrinquedotecaRouteImport.update({
+  id: '/brinquedoteca',
+  path: '/brinquedoteca',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AcessibilidadeRoute = AcessibilidadeRouteImport.update({
   id: '/acessibilidade',
   path: '/acessibilidade',
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/brinquedoteca': typeof BrinquedotecaRoute
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/brinquedoteca': typeof BrinquedotecaRoute
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/brinquedoteca': typeof BrinquedotecaRoute
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/academia'
     | '/acessibilidade'
+    | '/brinquedoteca'
     | '/choupanas'
     | '/edificios'
     | '/entrada'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/academia'
     | '/acessibilidade'
+    | '/brinquedoteca'
     | '/choupanas'
     | '/edificios'
     | '/entrada'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/academia'
     | '/acessibilidade'
+    | '/brinquedoteca'
     | '/choupanas'
     | '/edificios'
     | '/entrada'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcademiaRoute: typeof AcademiaRoute
   AcessibilidadeRoute: typeof AcessibilidadeRoute
+  BrinquedotecaRoute: typeof BrinquedotecaRoute
   ChoupanasRoute: typeof ChoupanasRoute
   EdificiosRoute: typeof EdificiosRoute
   EntradaRoute: typeof EntradaRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChoupanasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brinquedoteca': {
+      id: '/brinquedoteca'
+      path: '/brinquedoteca'
+      fullPath: '/brinquedoteca'
+      preLoaderRoute: typeof BrinquedotecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/acessibilidade': {
       id: '/acessibilidade'
       path: '/acessibilidade'
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcademiaRoute: AcademiaRoute,
   AcessibilidadeRoute: AcessibilidadeRoute,
+  BrinquedotecaRoute: BrinquedotecaRoute,
   ChoupanasRoute: ChoupanasRoute,
   EdificiosRoute: EdificiosRoute,
   EntradaRoute: EntradaRoute,
