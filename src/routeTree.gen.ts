@@ -15,6 +15,7 @@ import { Route as EntradaRouteImport } from './routes/entrada'
 import { Route as EdificiosRouteImport } from './routes/edificios'
 import { Route as ChoupanasRouteImport } from './routes/choupanas'
 import { Route as AcessibilidadeRouteImport } from './routes/acessibilidade'
+import { Route as AcademiaRouteImport } from './routes/academia'
 import { Route as IndexRouteImport } from './routes/index'
 
 const MenuRoute = MenuRouteImport.update({
@@ -47,6 +48,11 @@ const AcessibilidadeRoute = AcessibilidadeRouteImport.update({
   path: '/acessibilidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcademiaRoute = AcademiaRouteImport.update({
+  id: '/academia',
+  path: '/academia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,6 +61,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
   '/choupanas': typeof ChoupanasRoute
   '/edificios': typeof EdificiosRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/academia'
     | '/acessibilidade'
     | '/choupanas'
     | '/edificios'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/academia'
     | '/acessibilidade'
     | '/choupanas'
     | '/edificios'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/academia'
     | '/acessibilidade'
     | '/choupanas'
     | '/edificios'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcademiaRoute: typeof AcademiaRoute
   AcessibilidadeRoute: typeof AcessibilidadeRoute
   ChoupanasRoute: typeof ChoupanasRoute
   EdificiosRoute: typeof EdificiosRoute
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcessibilidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/academia': {
+      id: '/academia'
+      path: '/academia'
+      fullPath: '/academia'
+      preLoaderRoute: typeof AcademiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcademiaRoute: AcademiaRoute,
   AcessibilidadeRoute: AcessibilidadeRoute,
   ChoupanasRoute: ChoupanasRoute,
   EdificiosRoute: EdificiosRoute,
