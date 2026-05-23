@@ -9,12 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SalaoGourmetRouteImport } from './routes/salao-gourmet'
+import { Route as QuadrasRouteImport } from './routes/quadras'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as MapaRouteImport } from './routes/mapa'
+import { Route as LavanderiaRouteImport } from './routes/lavanderia'
 import { Route as EntradaRouteImport } from './routes/entrada'
+import { Route as EdificiosRouteImport } from './routes/edificios'
+import { Route as ChoupanasRouteImport } from './routes/choupanas'
+import { Route as BrinquedotecaRouteImport } from './routes/brinquedoteca'
+import { Route as BicicletarioRouteImport } from './routes/bicicletario'
+import { Route as AreaFestasRouteImport } from './routes/area-festas'
 import { Route as AcessibilidadeRouteImport } from './routes/acessibilidade'
+import { Route as AcademiaRouteImport } from './routes/academia'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SalaoGourmetRoute = SalaoGourmetRouteImport.update({
+  id: '/salao-gourmet',
+  path: '/salao-gourmet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuadrasRoute = QuadrasRouteImport.update({
+  id: '/quadras',
+  path: '/quadras',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
@@ -25,14 +44,49 @@ const MapaRoute = MapaRouteImport.update({
   path: '/mapa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LavanderiaRoute = LavanderiaRouteImport.update({
+  id: '/lavanderia',
+  path: '/lavanderia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EntradaRoute = EntradaRouteImport.update({
   id: '/entrada',
   path: '/entrada',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EdificiosRoute = EdificiosRouteImport.update({
+  id: '/edificios',
+  path: '/edificios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChoupanasRoute = ChoupanasRouteImport.update({
+  id: '/choupanas',
+  path: '/choupanas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrinquedotecaRoute = BrinquedotecaRouteImport.update({
+  id: '/brinquedoteca',
+  path: '/brinquedoteca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BicicletarioRoute = BicicletarioRouteImport.update({
+  id: '/bicicletario',
+  path: '/bicicletario',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AreaFestasRoute = AreaFestasRouteImport.update({
+  id: '/area-festas',
+  path: '/area-festas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AcessibilidadeRoute = AcessibilidadeRouteImport.update({
   id: '/acessibilidade',
   path: '/acessibilidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademiaRoute = AcademiaRouteImport.update({
+  id: '/academia',
+  path: '/academia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -43,44 +97,137 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/area-festas': typeof AreaFestasRoute
+  '/bicicletario': typeof BicicletarioRoute
+  '/brinquedoteca': typeof BrinquedotecaRoute
+  '/choupanas': typeof ChoupanasRoute
+  '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
+  '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
+  '/quadras': typeof QuadrasRoute
+  '/salao-gourmet': typeof SalaoGourmetRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/area-festas': typeof AreaFestasRoute
+  '/bicicletario': typeof BicicletarioRoute
+  '/brinquedoteca': typeof BrinquedotecaRoute
+  '/choupanas': typeof ChoupanasRoute
+  '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
+  '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
+  '/quadras': typeof QuadrasRoute
+  '/salao-gourmet': typeof SalaoGourmetRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/academia': typeof AcademiaRoute
   '/acessibilidade': typeof AcessibilidadeRoute
+  '/area-festas': typeof AreaFestasRoute
+  '/bicicletario': typeof BicicletarioRoute
+  '/brinquedoteca': typeof BrinquedotecaRoute
+  '/choupanas': typeof ChoupanasRoute
+  '/edificios': typeof EdificiosRoute
   '/entrada': typeof EntradaRoute
+  '/lavanderia': typeof LavanderiaRoute
   '/mapa': typeof MapaRoute
   '/menu': typeof MenuRoute
+  '/quadras': typeof QuadrasRoute
+  '/salao-gourmet': typeof SalaoGourmetRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/acessibilidade' | '/entrada' | '/mapa' | '/menu'
+  fullPaths:
+    | '/'
+    | '/academia'
+    | '/acessibilidade'
+    | '/area-festas'
+    | '/bicicletario'
+    | '/brinquedoteca'
+    | '/choupanas'
+    | '/edificios'
+    | '/entrada'
+    | '/lavanderia'
+    | '/mapa'
+    | '/menu'
+    | '/quadras'
+    | '/salao-gourmet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/acessibilidade' | '/entrada' | '/mapa' | '/menu'
-  id: '__root__' | '/' | '/acessibilidade' | '/entrada' | '/mapa' | '/menu'
+  to:
+    | '/'
+    | '/academia'
+    | '/acessibilidade'
+    | '/area-festas'
+    | '/bicicletario'
+    | '/brinquedoteca'
+    | '/choupanas'
+    | '/edificios'
+    | '/entrada'
+    | '/lavanderia'
+    | '/mapa'
+    | '/menu'
+    | '/quadras'
+    | '/salao-gourmet'
+  id:
+    | '__root__'
+    | '/'
+    | '/academia'
+    | '/acessibilidade'
+    | '/area-festas'
+    | '/bicicletario'
+    | '/brinquedoteca'
+    | '/choupanas'
+    | '/edificios'
+    | '/entrada'
+    | '/lavanderia'
+    | '/mapa'
+    | '/menu'
+    | '/quadras'
+    | '/salao-gourmet'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcademiaRoute: typeof AcademiaRoute
   AcessibilidadeRoute: typeof AcessibilidadeRoute
+  AreaFestasRoute: typeof AreaFestasRoute
+  BicicletarioRoute: typeof BicicletarioRoute
+  BrinquedotecaRoute: typeof BrinquedotecaRoute
+  ChoupanasRoute: typeof ChoupanasRoute
+  EdificiosRoute: typeof EdificiosRoute
   EntradaRoute: typeof EntradaRoute
+  LavanderiaRoute: typeof LavanderiaRoute
   MapaRoute: typeof MapaRoute
   MenuRoute: typeof MenuRoute
+  QuadrasRoute: typeof QuadrasRoute
+  SalaoGourmetRoute: typeof SalaoGourmetRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/salao-gourmet': {
+      id: '/salao-gourmet'
+      path: '/salao-gourmet'
+      fullPath: '/salao-gourmet'
+      preLoaderRoute: typeof SalaoGourmetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quadras': {
+      id: '/quadras'
+      path: '/quadras'
+      fullPath: '/quadras'
+      preLoaderRoute: typeof QuadrasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/menu': {
       id: '/menu'
       path: '/menu'
@@ -95,6 +242,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lavanderia': {
+      id: '/lavanderia'
+      path: '/lavanderia'
+      fullPath: '/lavanderia'
+      preLoaderRoute: typeof LavanderiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/entrada': {
       id: '/entrada'
       path: '/entrada'
@@ -102,11 +256,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EntradaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/edificios': {
+      id: '/edificios'
+      path: '/edificios'
+      fullPath: '/edificios'
+      preLoaderRoute: typeof EdificiosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/choupanas': {
+      id: '/choupanas'
+      path: '/choupanas'
+      fullPath: '/choupanas'
+      preLoaderRoute: typeof ChoupanasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brinquedoteca': {
+      id: '/brinquedoteca'
+      path: '/brinquedoteca'
+      fullPath: '/brinquedoteca'
+      preLoaderRoute: typeof BrinquedotecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bicicletario': {
+      id: '/bicicletario'
+      path: '/bicicletario'
+      fullPath: '/bicicletario'
+      preLoaderRoute: typeof BicicletarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/area-festas': {
+      id: '/area-festas'
+      path: '/area-festas'
+      fullPath: '/area-festas'
+      preLoaderRoute: typeof AreaFestasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/acessibilidade': {
       id: '/acessibilidade'
       path: '/acessibilidade'
       fullPath: '/acessibilidade'
       preLoaderRoute: typeof AcessibilidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academia': {
+      id: '/academia'
+      path: '/academia'
+      fullPath: '/academia'
+      preLoaderRoute: typeof AcademiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -121,10 +317,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcademiaRoute: AcademiaRoute,
   AcessibilidadeRoute: AcessibilidadeRoute,
+  AreaFestasRoute: AreaFestasRoute,
+  BicicletarioRoute: BicicletarioRoute,
+  BrinquedotecaRoute: BrinquedotecaRoute,
+  ChoupanasRoute: ChoupanasRoute,
+  EdificiosRoute: EdificiosRoute,
   EntradaRoute: EntradaRoute,
+  LavanderiaRoute: LavanderiaRoute,
   MapaRoute: MapaRoute,
   MenuRoute: MenuRoute,
+  QuadrasRoute: QuadrasRoute,
+  SalaoGourmetRoute: SalaoGourmetRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
