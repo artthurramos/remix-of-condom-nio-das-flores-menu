@@ -129,20 +129,16 @@ function MapaPage() {
             />
 
             {/* Highlighted page overlay when active */}
-            {SPOTS.map((s) => (
-              <img
-                key={s.page}
-                src={`/mapa/page-${s.page}.jpg`}
-                alt=""
-                aria-hidden
-                draggable={false}
-                className={`pointer-events-none absolute inset-0 block w-full h-full transition-opacity duration-300 ${
-                  active?.page === s.page ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            ))}
+            {/* Highlighted page overlay when active (hidden — only name is shown) */}
 
-            {/* Active spot name */}
+            {/* Active spot name centered */}
+            {active && (
+              <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+                <div className="rounded-xl bg-neutral-900/85 px-6 py-3 text-2xl md:text-3xl font-serif font-bold text-white shadow-2xl ring-1 ring-white/10">
+                  {active.name}
+                </div>
+              </div>
+            )}
             {active && (
               <div
                 className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-md bg-amber-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg"
