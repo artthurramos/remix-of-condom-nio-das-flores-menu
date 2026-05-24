@@ -122,8 +122,10 @@ function MapaPage() {
             <img
               src="/mapa/base.jpg"
               alt="Mapa do Condomínio das Flores"
-              className="block w-full"
               draggable={false}
+              className={`block w-full transition-all duration-300 ${
+                active ? "blur-md brightness-90" : ""
+              }`}
             />
 
             {/* Highlighted page overlay when active */}
@@ -139,6 +141,16 @@ function MapaPage() {
                 }`}
               />
             ))}
+
+            {/* Active spot name */}
+            {active && (
+              <div
+                className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-md bg-amber-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg"
+                style={{ left: `${active.cx}%`, top: `${active.cy}%` }}
+              >
+                {active.name}
+              </div>
+            )}
 
             {/* Hover preview (soft highlight via mask image with tint) */}
             {hover && active?.page !== hover.page && (
