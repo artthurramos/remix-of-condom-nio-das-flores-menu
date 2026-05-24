@@ -429,22 +429,7 @@ function FluxoPrestador({ onClose }: { onClose: () => void }) {
 
       {cat === "entregas" && <FluxoEntregas onVoltar={() => setCat(null)} />}
 
-      {cat === "servicos" && (
-        <div className="grid gap-4 text-center">
-          <p className="text-sm text-white/70">
-            Categoria selecionada: <span className="font-serif text-base text-white">Serviços</span>
-          </p>
-          <div className="rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-5 py-4 text-emerald-200">
-            Acesso encaminhado à portaria. Aguarde liberação.
-          </div>
-          <button
-            onClick={() => setCat(null)}
-            className="mx-auto inline-flex items-center gap-2 text-xs text-white/60 transition hover:text-white"
-          >
-            <ArrowLeft className="h-3 w-3" /> Trocar categoria
-          </button>
-        </div>
-      )}
+      {cat === "servicos" && <FluxoServicos onVoltar={() => setCat(null)} />}
     </Painel>
   );
 }
