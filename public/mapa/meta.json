@@ -1,0 +1,98 @@
+[
+  {
+    "page": 2,
+    "name": "BLOCO C",
+    "cx": 30.6,
+    "cy": 24.8
+  },
+  {
+    "page": 3,
+    "name": "BLOCO A",
+    "cx": 64.4,
+    "cy": 75.2
+  },
+  {
+    "page": 4,
+    "name": "BLOCO D",
+    "cx": 71.7,
+    "cy": 24.8
+  },
+  {
+    "page": 5,
+    "name": "BLOCO B",
+    "cx": 37.6,
+    "cy": 75.5
+  },
+  {
+    "page": 6,
+    "name": "ACADEMIA",
+    "cx": 23.7,
+    "cy": 43.5
+  },
+  {
+    "page": 7,
+    "name": "BRINQUEDOTECA",
+    "cx": 25.9,
+    "cy": 52.9
+  },
+  {
+    "page": 8,
+    "name": "LAVANDERIA",
+    "cx": 78.2,
+    "cy": 43.8
+  },
+  {
+    "page": 9,
+    "name": "BICICLETÁRIO",
+    "cx": 78.1,
+    "cy": 53.3
+  },
+  {
+    "page": 10,
+    "name": "QUADRA 1",
+    "cx": 44.4,
+    "cy": 15.7
+  },
+  {
+    "page": 11,
+    "name": "QUADRA 2",
+    "cx": 57.4,
+    "cy": 15.6
+  },
+  {
+    "page": 12,
+    "name": "CHOUPANAS 1,2,3",
+    "cx": 33.0,
+    "cy": 46.4
+  },
+  {
+    "page": 13,
+    "name": "CHOUPANAS 1,2,3",
+    "cx": 69.1,
+    "cy": 46.5
+  },
+  {
+    "page": 14,
+    "name": "SALÃO GOURMET",
+    "cx": 33.3,
+    "cy": 80.6
+  },
+  {
+    "page": 15,
+    "name": "SALÃO DE FESTA",
+    "cx": 69.8,
+    "cy": 86.9
+  },
+  {
+    "page": 16,
+    "name": "SALÃO DE FESTA",
+    "cx": 49.8,
+    "cy": 49.0
+  },
+  {
+    "page": 17,
+    "name": "RECEPÇÃO",
+    "cx": 53.4,
+    "cy": 86.1
+  }
+]
