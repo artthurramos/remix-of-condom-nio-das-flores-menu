@@ -122,31 +122,23 @@ function MapaPage() {
             <img
               src="/mapa/base.jpg"
               alt="Mapa do Condomínio das Flores"
+              className="block w-full"
               draggable={false}
-              className={`block w-full transition-all duration-300 ${
-                active ? "blur-md brightness-90" : ""
-              }`}
             />
 
             {/* Highlighted page overlay when active */}
-            {/* Highlighted page overlay when active (hidden — only name is shown) */}
-
-            {/* Active spot name centered */}
-            {active && (
-              <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-                <div className="rounded-xl bg-neutral-900/85 px-6 py-3 text-2xl md:text-3xl font-serif font-bold text-white shadow-2xl ring-1 ring-white/10">
-                  {active.name}
-                </div>
-              </div>
-            )}
-            {active && (
-              <div
-                className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-md bg-amber-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg"
-                style={{ left: `${active.cx}%`, top: `${active.cy}%` }}
-              >
-                {active.name}
-              </div>
-            )}
+            {SPOTS.map((s) => (
+              <img
+                key={s.page}
+                src={`/mapa/page-${s.page}.jpg`}
+                alt=""
+                aria-hidden
+                draggable={false}
+                className={`pointer-events-none absolute inset-0 block w-full h-full transition-opacity duration-300 ${
+                  active?.page === s.page ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))}
 
             {/* Hover preview (soft highlight via mask image with tint) */}
             {hover && active?.page !== hover.page && (
