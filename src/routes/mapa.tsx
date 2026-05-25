@@ -91,12 +91,33 @@ function MapaPage() {
     setHover(s);
   };
 
+  const [intercom, setIntercom] = useState<{ bloco: string; apto: number } | null>(null);
+  const [callState, setCallState] = useState<"idle" | "calling" | "connected">("idle");
+
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - r.left) / r.width) * 100;
     const y = ((e.clientY - r.top) / r.height) * 100;
     const s = hitTest(x, y);
     setActive(s);
+    if (s) {
+      const m = s.name.match(/^BLOCO ([ABCD])$/);
+      if (m) {
+        setIntercom({ bloco: m[1], apto: 0 });
+        setCallState("idle");
+      }
+    }
+  };
+
+  const iniciarChamada = (apto: number) => {
+    setIntercom((p) => (p ? { ...p, apto } : p));
+    setCallState("calling");
+    setTimeout(() => setCallState("connected"), 2000);
+  };
+
+  const encerrar = () => {
+    setCallState("idle");
+    setIntercom(null);
   };
 
   return (
