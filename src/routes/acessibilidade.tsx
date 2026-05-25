@@ -113,7 +113,7 @@ function Porteiro({ voltar }: { voltar: () => void }) {
 }
 
 // Mínimo de tipos para SpeechRecognition (não tipado por padrão)
-type SRConstructor = new () => {
+type SRInstance = {
   lang: string;
   continuous: boolean;
   interimResults: boolean;
@@ -123,12 +123,13 @@ type SRConstructor = new () => {
   onend: (() => void) | null;
   onerror: (() => void) | null;
 };
+type SRConstructor = new () => SRInstance;
 
 function Voz({ voltar }: { voltar: () => void }) {
   const [ouvindo, setOuvindo] = useState(false);
   const [transcricao, setTranscricao] = useState("");
   const [resposta, setResposta] = useState("Toque em 'Ativar' e diga um comando, por exemplo: 'abrir mapa'.");
-  const recRef = useRef<ReturnType<SRConstructor> | null>(null);
+  const recRef = useRef<SRInstance | null>(null);
 
   const falar = (texto: string) => {
     setResposta(texto);
