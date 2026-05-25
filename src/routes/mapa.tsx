@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { BackToMenu } from "@/components/BackToMenu";
+import { PhoneCall, PhoneOff, X } from "lucide-react";
 
 export const Route = createFileRoute("/mapa")({
   component: MapaPage,
