@@ -1,7 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { BackToMenu } from "@/components/BackToMenu";
-import { PhoneCall, PhoneOff, X } from "lucide-react";
+import {
+  PhoneCall,
+  PhoneOff,
+  X,
+  Building2,
+  Dumbbell,
+  Puzzle,
+  Shirt,
+  Bike,
+  Flag,
+  TreePine,
+  UtensilsCrossed,
+  Music,
+  Bell,
+  type LucideProps,
+} from "lucide-react";
+import type { ComponentType } from "react";
+
+const ICON_MAP: Record<string, ComponentType<LucideProps>> = {
+  "BLOCO A": Building2,
+  "BLOCO B": Building2,
+  "BLOCO C": Building2,
+  "BLOCO D": Building2,
+  ACADEMIA: Dumbbell,
+  BRINQUEDOTECA: Puzzle,
+  LAVANDERIA: Shirt,
+  BICICLETÁRIO: Bike,
+  "QUADRA 1": Flag,
+  "QUADRA 2": Flag,
+  "CHOUPANAS 1,2,3": TreePine,
+  "SALÃO GOURMET": UtensilsCrossed,
+  "SALÃO DE FESTA": Music,
+  RECEPÇÃO: Bell,
+};
 
 export const Route = createFileRoute("/mapa")({
   component: MapaPage,
