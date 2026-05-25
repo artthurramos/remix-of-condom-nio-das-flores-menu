@@ -200,7 +200,14 @@ function MapaPage() {
           {Array.from(new Map(SPOTS.map((s) => [s.name, s])).values()).map((s) => (
             <button
               key={s.name}
-              onClick={() => setActive(s)}
+              onClick={() => {
+                setActive(s);
+                const m = s.name.match(/^BLOCO ([ABCD])$/);
+                if (m) {
+                  setIntercom({ bloco: m[1], apto: 0 });
+                  setCallState("idle");
+                }
+              }}
               className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-all ${
                 active?.name === s.name
                   ? "border-amber-500 bg-amber-50 font-semibold text-amber-900"
@@ -213,6 +220,101 @@ function MapaPage() {
           ))}
         </div>
       </div>
+
+      {intercom && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          onClick={encerrar}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-md overflow-hidden rounded-3xl bg-gradient-to-b from-neutral-900 to-neutral-800 text-white shadow-2xl ring-1 ring-white/10"
+          >
+            <button
+              onClick={encerrar}
+              className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-white/80 hover:bg-white/20"
+              aria-label="Fechar"
+            >
+              <X className="h-4 w-4" />
+            </button>
+
+            <div className="px-6 pt-8 pb-4 text-center">
+              <p className="text-[11px] tracking-[0.35em] text-white/50">INTERFONE</p>
+              <h2 className="mt-2 font-serif text-3xl">Bloco {intercom.bloco}</h2>
+              {callState === "idle" && (
+                <p className="mt-1 text-sm text-white/60">Selecione o apartamento</p>
+              )}
+              {callState === "calling" && (
+                <p className="mt-1 text-sm text-amber-300">
+                  Chamando apto {String(intercom.apto).padStart(2, "0")}...
+                </p>
+              )}
+              {callState === "connected" && (
+                <p className="mt-1 text-sm text-emerald-300">
+                  Conectado — apto {String(intercom.apto).padStart(2, "0")}
+                </p>
+              )}
+            </div>
+
+            {callState === "idle" ? (
+              <div className="px-6 pb-8">
+                <div className="grid grid-cols-5 gap-3">
+                  {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                    <button
+                      key={n}
+                      onClick={() => iniciarChamada(n)}
+                      className="group flex aspect-square flex-col items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10 transition hover:bg-emerald-500/20 hover:ring-emerald-400/50"
+                    >
+                      <span className="text-[10px] uppercase tracking-wider text-white/50 group-hover:text-emerald-200">
+                        Apto
+                      </span>
+                      <span className="text-lg font-semibold text-white">
+                        {intercom.bloco}
+                        {String(n).padStart(2, "0")}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-4 text-center text-xs text-white/40">
+                  10 apartamentos disponíveis neste bloco
+                </p>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center px-6 pb-10">
+                <div className="relative mb-6 flex h-32 w-32 items-center justify-center">
+                  {callState === "calling" && (
+                    <>
+                      <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500/30" />
+                      <span className="absolute inset-2 animate-pulse rounded-full bg-emerald-500/20" />
+                    </>
+                  )}
+                  <div
+                    className={`relative flex h-24 w-24 items-center justify-center rounded-full ${
+                      callState === "connected" ? "bg-emerald-500" : "bg-emerald-600"
+                    }`}
+                  >
+                    <PhoneCall className="h-10 w-10 text-white" />
+                  </div>
+                </div>
+                <p className="mb-1 text-2xl font-semibold">
+                  Apto {intercom.bloco}
+                  {String(intercom.apto).padStart(2, "0")}
+                </p>
+                <p className="mb-6 text-xs text-white/50">
+                  {callState === "calling" ? "Tocando..." : "Chamada em andamento"}
+                </p>
+                <button
+                  onClick={encerrar}
+                  className="inline-flex items-center gap-2 rounded-full bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-red-700"
+                >
+                  <PhoneOff className="h-4 w-4" />
+                  Encerrar chamada
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 }
