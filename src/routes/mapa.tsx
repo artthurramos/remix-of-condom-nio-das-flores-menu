@@ -173,88 +173,29 @@ function MapaPage() {
             onClick={onClick}
             style={{ cursor: hover ? "pointer" : "default" }}
           >
-            {/* Base map (dimmed when a spot is active) */}
+            {/* Base map */}
             <img
               src="/mapa/base.jpg"
               alt="Mapa do Condomínio das Flores"
+              className="block w-full"
               draggable={false}
-              className={`block w-full transition-all duration-500 ${
-                active ? "brightness-[0.35] saturate-50 blur-[1px]" : ""
-              }`}
             />
 
-            {/* Highlighted spot — only the active location at full brightness, clipped by its mask */}
-            {active && (
+            {/* Highlighted page overlay when active */}
+            {SPOTS.map((s) => (
               <img
-                src={`/mapa/page-${active.page}.jpg`}
+                key={s.page}
+                src={`/mapa/page-${s.page}.jpg`}
                 alt=""
                 aria-hidden
                 draggable={false}
-                className="pointer-events-none absolute inset-0 block w-full h-full transition-opacity duration-300"
-                style={{
-                  WebkitMaskImage: `url(/mapa/mask-${active.page}.png)`,
-                  maskImage: `url(/mapa/mask-${active.page}.png)`,
-                  WebkitMaskSize: "100% 100%",
-                  maskSize: "100% 100%",
-                  WebkitMaskRepeat: "no-repeat",
-                  maskRepeat: "no-repeat",
-                  filter: "drop-shadow(0 0 12px rgba(245,158,11,0.55))",
-                }}
+                className={`pointer-events-none absolute inset-0 block w-full h-full transition-opacity duration-300 ${
+                  active?.page === s.page ? "opacity-100" : "opacity-0"
+                }`}
               />
-            )}
+            ))}
 
-            {/* Routing path: Recepção → spot ativo */}
-            {active && active.name !== "RECEPÇÃO" && (
-              <svg
-                className="pointer-events-none absolute inset-0 z-10 h-full w-full"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-              >
-                <defs>
-                  <marker id="arrowEnd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-                    <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
-                  </marker>
-                </defs>
-                <line
-                  x1={53.4}
-                  y1={86.1}
-                  x2={active.cx}
-                  y2={active.cy}
-                  stroke="#f59e0b"
-                  strokeWidth={3}
-                  strokeDasharray="6 4"
-                  strokeLinecap="round"
-                  vectorEffect="non-scaling-stroke"
-                  markerEnd="url(#arrowEnd)"
-                >
-                  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.2s" repeatCount="indefinite" />
-                </line>
-                <circle cx={53.4} cy={86.1} r={1.2} fill="#10b981" stroke="#fff" strokeWidth={0.4} vectorEffect="non-scaling-stroke" />
-                <circle cx={active.cx} cy={active.cy} r={1.4} fill="#f59e0b" stroke="#fff" strokeWidth={0.4} vectorEffect="non-scaling-stroke" />
-              </svg>
-            )}
-
-            {/* Active spot label */}
-            {active && (
-              <div
-                className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-md bg-amber-500 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg"
-                style={{ left: `${active.cx}%`, top: `${active.cy - 2}%` }}
-              >
-                {active.name}
-              </div>
-            )}
-
-            {/* Recepção start label when routing */}
-            {active && active.name !== "RECEPÇÃO" && (
-              <div
-                className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg"
-                style={{ left: `53.4%`, top: `84%` }}
-              >
-                Início · Recepção
-              </div>
-            )}
-
-            {/* Hover preview */}
+            {/* Hover preview (soft highlight via mask image with tint) */}
             {hover && active?.page !== hover.page && (
               <img
                 src={`/mapa/mask-${hover.page}.png`}
