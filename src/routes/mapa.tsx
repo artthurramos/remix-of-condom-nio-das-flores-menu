@@ -230,27 +230,30 @@ function MapaPage() {
 
         {/* Legend */}
         <div className="mt-8 grid grid-cols-2 gap-2 md:grid-cols-4">
-          {Array.from(new Map(SPOTS.map((s) => [s.name, s])).values()).map((s) => (
-            <button
-              key={s.name}
-              onClick={() => {
-                setActive(s);
-                const m = s.name.match(/^BLOCO ([ABCD])$/);
-                if (m) {
-                  setIntercom({ bloco: m[1], apto: 0 });
-                  setCallState("idle");
-                }
-              }}
-              className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-all ${
-                active?.name === s.name
-                  ? "border-amber-500 bg-amber-50 font-semibold text-amber-900"
-                  : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50"
-              }`}
-            >
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-400" />
-              {s.name}
-            </button>
-          ))}
+          {Array.from(new Map(SPOTS.map((s) => [s.name, s])).values()).map((s) => {
+            const Icon = ICON_MAP[s.name] || Building2;
+            return (
+              <button
+                key={s.name}
+                onClick={() => {
+                  setActive(s);
+                  const m = s.name.match(/^BLOCO ([ABCD])$/);
+                  if (m) {
+                    setIntercom({ bloco: m[1], apto: 0 });
+                    setCallState("idle");
+                  }
+                }}
+                className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-all ${
+                  active?.name === s.name
+                    ? "border-amber-500 bg-amber-50 font-semibold text-amber-900"
+                    : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50"
+                }`}
+              >
+                <Icon className="h-4 w-4 shrink-0 text-amber-500" />
+                {s.name}
+              </button>
+            );
+          })}
         </div>
       </div>
 
