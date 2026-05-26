@@ -138,8 +138,7 @@ function MapaPage() {
       setCallState("idle");
     } else {
       setIntercom({ tipo: "local", nome: s.name });
-      setCallState("calling");
-      setTimeout(() => setCallState("connected"), 2000);
+      setCallState("confirm");
     }
   };
 
@@ -154,6 +153,10 @@ function MapaPage() {
 
   const iniciarChamada = (apto: number) => {
     setIntercom((p) => (p && p.tipo === "bloco" ? { ...p, apto } : p));
+    setCallState("confirm");
+  };
+
+  const confirmarChamada = () => {
     setCallState("calling");
     setTimeout(() => setCallState("connected"), 2000);
   };
