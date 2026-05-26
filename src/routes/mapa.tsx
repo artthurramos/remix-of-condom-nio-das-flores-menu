@@ -247,11 +247,7 @@ function MapaPage() {
                 key={s.name}
                 onClick={() => {
                   setActive(s);
-                  const m = s.name.match(/^BLOCO ([ABCD])$/);
-                  if (m) {
-                    setIntercom({ bloco: m[1], apto: 0 });
-                    setCallState("idle");
-                  }
+                  abrirIntercom(s);
                 }}
                 className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-all ${
                   active?.name === s.name
