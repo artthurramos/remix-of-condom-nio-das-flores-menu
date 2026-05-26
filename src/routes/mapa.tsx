@@ -124,8 +124,24 @@ function MapaPage() {
     setHover(s);
   };
 
-  const [intercom, setIntercom] = useState<{ bloco: string; apto: number } | null>(null);
+  const [intercom, setIntercom] = useState<
+    | { tipo: "bloco"; bloco: string; apto: number }
+    | { tipo: "local"; nome: string }
+    | null
+  >(null);
   const [callState, setCallState] = useState<"idle" | "calling" | "connected">("idle");
+
+  const abrirIntercom = (s: Spot) => {
+    const m = s.name.match(/^BLOCO ([ABCD])$/);
+    if (m) {
+      setIntercom({ tipo: "bloco", bloco: m[1], apto: 0 });
+      setCallState("idle");
+    } else {
+      setIntercom({ tipo: "local", nome: s.name });
+      setCallState("calling");
+      setTimeout(() => setCallState("connected"), 2000);
+    }
+  };
 
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -133,17 +149,11 @@ function MapaPage() {
     const y = ((e.clientY - r.top) / r.height) * 100;
     const s = hitTest(x, y);
     setActive(s);
-    if (s) {
-      const m = s.name.match(/^BLOCO ([ABCD])$/);
-      if (m) {
-        setIntercom({ bloco: m[1], apto: 0 });
-        setCallState("idle");
-      }
-    }
+    if (s) abrirIntercom(s);
   };
 
   const iniciarChamada = (apto: number) => {
-    setIntercom((p) => (p ? { ...p, apto } : p));
+    setIntercom((p) => (p && p.tipo === "bloco" ? { ...p, apto } : p));
     setCallState("calling");
     setTimeout(() => setCallState("connected"), 2000);
   };
@@ -237,11 +247,7 @@ function MapaPage() {
                 key={s.name}
                 onClick={() => {
                   setActive(s);
-                  const m = s.name.match(/^BLOCO ([ABCD])$/);
-                  if (m) {
-                    setIntercom({ bloco: m[1], apto: 0 });
-                    setCallState("idle");
-                  }
+                  abrirIntercom(s);
                 }}
                 className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-all ${
                   active?.name === s.name
@@ -276,23 +282,29 @@ function MapaPage() {
 
             <div className="px-6 pt-8 pb-4 text-center">
               <p className="text-[11px] tracking-[0.35em] text-white/50">INTERFONE</p>
-              <h2 className="mt-2 font-serif text-3xl">Bloco {intercom.bloco}</h2>
-              {callState === "idle" && (
+              <h2 className="mt-2 font-serif text-3xl">
+                {intercom.tipo === "bloco" ? `Bloco ${intercom.bloco}` : intercom.nome}
+              </h2>
+              {intercom.tipo === "bloco" && callState === "idle" && (
                 <p className="mt-1 text-sm text-white/60">Selecione o apartamento</p>
               )}
               {callState === "calling" && (
                 <p className="mt-1 text-sm text-amber-300">
-                  Chamando apto {String(intercom.apto).padStart(2, "0")}...
+                  {intercom.tipo === "bloco"
+                    ? `Chamando apto ${String(intercom.apto).padStart(2, "0")}...`
+                    : "Chamando..."}
                 </p>
               )}
               {callState === "connected" && (
                 <p className="mt-1 text-sm text-emerald-300">
-                  Conectado — apto {String(intercom.apto).padStart(2, "0")}
+                  {intercom.tipo === "bloco"
+                    ? `Conectado — apto ${String(intercom.apto).padStart(2, "0")}`
+                    : "Conectado"}
                 </p>
               )}
             </div>
 
-            {callState === "idle" ? (
+            {intercom.tipo === "bloco" && callState === "idle" ? (
               <div className="px-6 pb-8">
                 <div className="grid grid-cols-5 gap-3">
                   {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
@@ -333,8 +345,9 @@ function MapaPage() {
                   </div>
                 </div>
                 <p className="mb-1 text-2xl font-semibold">
-                  Apto {intercom.bloco}
-                  {String(intercom.apto).padStart(2, "0")}
+                  {intercom.tipo === "bloco"
+                    ? `Apto ${intercom.bloco}${String(intercom.apto).padStart(2, "0")}`
+                    : intercom.nome}
                 </p>
                 <p className="mb-6 text-xs text-white/50">
                   {callState === "calling" ? "Tocando..." : "Chamada em andamento"}

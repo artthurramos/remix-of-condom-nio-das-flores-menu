@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BackToMenu } from "@/components/BackToMenu";
-import { Accessibility, Bell, Mic, MicOff, PhoneCall, Check } from "lucide-react";
+import { ScanEye, Bell, Mic, MicOff, PhoneCall, Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/acessibilidade")({
@@ -16,7 +16,7 @@ function AcessPage() {
     <main className="relative min-h-screen bg-neutral-50">
       <BackToMenu />
       <div className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 py-24 text-center">
-        <Accessibility className="h-12 w-12 text-neutral-700" aria-hidden="true" />
+        <ScanEye className="h-12 w-12 text-neutral-700" aria-hidden="true" />
         <p className="mt-6 text-[11px] tracking-[0.35em] text-neutral-500">RECURSOS INCLUSIVOS</p>
         <h1 className="mt-2 font-serif text-5xl text-neutral-900">Acessibilidade</h1>
         <p className="mt-4 max-w-md text-neutral-600">
