@@ -291,6 +291,11 @@ function MapaPage() {
               {intercom.tipo === "bloco" && callState === "idle" && (
                 <p className="mt-1 text-sm text-white/60">Selecione o apartamento</p>
               )}
+              {callState === "confirm" && (
+                <p className="mt-1 text-sm text-amber-300">
+                  Deseja iniciar a chamada?
+                </p>
+              )}
               {callState === "calling" && (
                 <p className="mt-1 text-sm text-amber-300">
                   {intercom.tipo === "bloco"
@@ -329,6 +334,38 @@ function MapaPage() {
                 <p className="mt-4 text-center text-xs text-white/40">
                   10 apartamentos disponíveis neste bloco
                 </p>
+              </div>
+            ) : callState === "confirm" ? (
+              <div className="flex flex-col items-center px-6 pb-10">
+                <div className="relative mb-6 flex h-32 w-32 items-center justify-center">
+                  <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-amber-500">
+                    <PhoneCall className="h-10 w-10 text-white" />
+                  </div>
+                </div>
+                <p className="mb-1 text-2xl font-semibold">
+                  {intercom.tipo === "bloco"
+                    ? `Apto ${intercom.bloco}${String(intercom.apto).padStart(2, "0")}`
+                    : intercom.nome}
+                </p>
+                <p className="mb-6 text-xs text-white/50">
+                  Confirme para iniciar a ligação
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={encerrar}
+                    className="inline-flex items-center gap-2 rounded-full bg-white/10 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-white/20"
+                  >
+                    <X className="h-4 w-4" />
+                    Não
+                  </button>
+                  <button
+                    onClick={confirmarChamada}
+                    className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-emerald-700"
+                  >
+                    <PhoneCall className="h-4 w-4" />
+                    Sim, ligar
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="flex flex-col items-center px-6 pb-10">
