@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Menu, Map, DoorOpen, Accessibility } from "lucide-react";
+import { Menu, Map, DoorOpen, ScanEye } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
