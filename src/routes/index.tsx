@@ -10,7 +10,7 @@ const items = [
   { to: "/menu", icon: Menu, label: "Menu", sub: "NAVEGAÇÃO GERAL" },
   { to: "/mapa", icon: Map, label: "Mapa", sub: "LOCALIZAÇÃO" },
   { to: "/entrada", icon: DoorOpen, label: "Entrada", sub: "ACESSO PRINCIPAL" },
-  { to: "/acessibilidade", icon: Accessibility, label: "Acessibilidade", sub: "RECURSOS INCLUSIVOS" },
+  { to: "/acessibilidade", icon: ScanEye, label: "Acessibilidade", sub: "RECURSOS INCLUSIVOS" },
 ] as const;
 
 function Index() {
