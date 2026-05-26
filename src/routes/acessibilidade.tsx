@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BackToMenu } from "@/components/BackToMenu";
 import { ScanEye, Bell, Mic, MicOff, PhoneCall, Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { feedback, playClick } from "@/lib/feedback";
 
 export const Route = createFileRoute("/acessibilidade")({
   component: AcessPage,
@@ -26,7 +27,10 @@ function AcessPage() {
         {aba === "menu" && (
           <div className="mt-10 grid w-full gap-4 sm:grid-cols-2">
             <button
-              onClick={() => setAba("porteiro")}
+              onClick={() => {
+                feedback("Chamar Porteiro", "open");
+                setAba("porteiro");
+              }}
               className="group flex flex-col items-center gap-3 rounded-xl border border-neutral-200 bg-white p-8 text-left transition hover:border-neutral-900 hover:shadow-md"
               aria-label="Chamar o porteiro para auxílio"
             >
@@ -38,7 +42,10 @@ function AcessPage() {
             </button>
 
             <button
-              onClick={() => setAba("voz")}
+              onClick={() => {
+                feedback("Comando de Voz", "open");
+                setAba("voz");
+              }}
               className="group flex flex-col items-center gap-3 rounded-xl border border-neutral-200 bg-white p-8 text-left transition hover:border-neutral-900 hover:shadow-md"
               aria-label="Ativar navegação por comando de voz"
             >
@@ -64,6 +71,7 @@ function Porteiro({ voltar }: { voltar: () => void }) {
   const [estado, setEstado] = useState<"idle" | "chamando" | "atendido">("idle");
 
   const chamar = () => {
+    feedback("Chamando o porteiro", "confirm");
     setEstado("chamando");
     setTimeout(() => setEstado("atendido"), 2500);
   };
@@ -104,7 +112,13 @@ function Porteiro({ voltar }: { voltar: () => void }) {
           </div>
         )}
 
-        <button onClick={voltar} className="mt-4 text-sm text-neutral-500 underline">
+        <button
+          onClick={() => {
+            playClick("tap");
+            voltar();
+          }}
+          className="mt-4 text-sm text-neutral-500 underline"
+        >
           Voltar
         </button>
       </div>

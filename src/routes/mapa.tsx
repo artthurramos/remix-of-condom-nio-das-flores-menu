@@ -18,6 +18,7 @@ import {
   type LucideProps,
 } from "lucide-react";
 import type { ComponentType } from "react";
+import { feedback, playClick } from "@/lib/feedback";
 
 const ICON_MAP: Record<string, ComponentType<LucideProps>> = {
   "BLOCO A": Building2,
@@ -152,16 +153,22 @@ function MapaPage() {
   };
 
   const iniciarChamada = (apto: number) => {
+    const label = intercom && intercom.tipo === "bloco"
+      ? `Apartamento ${intercom.bloco}${String(apto).padStart(2, "0")}`
+      : "Apartamento";
+    feedback(label, "open");
     setIntercom((p) => (p && p.tipo === "bloco" ? { ...p, apto } : p));
     setCallState("confirm");
   };
 
   const confirmarChamada = () => {
+    feedback("Ligando", "confirm");
     setCallState("calling");
     setTimeout(() => setCallState("connected"), 2000);
   };
 
   const encerrar = () => {
+    playClick("tap");
     setCallState("idle");
     setIntercom(null);
   };
@@ -249,6 +256,7 @@ function MapaPage() {
               <button
                 key={s.name}
                 onClick={() => {
+                  feedback(s.name, "open");
                   setActive(s);
                   abrirIntercom(s);
                 }}
