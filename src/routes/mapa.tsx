@@ -124,8 +124,24 @@ function MapaPage() {
     setHover(s);
   };
 
-  const [intercom, setIntercom] = useState<{ bloco: string; apto: number } | null>(null);
+  const [intercom, setIntercom] = useState<
+    | { tipo: "bloco"; bloco: string; apto: number }
+    | { tipo: "local"; nome: string }
+    | null
+  >(null);
   const [callState, setCallState] = useState<"idle" | "calling" | "connected">("idle");
+
+  const abrirIntercom = (s: Spot) => {
+    const m = s.name.match(/^BLOCO ([ABCD])$/);
+    if (m) {
+      setIntercom({ tipo: "bloco", bloco: m[1], apto: 0 });
+      setCallState("idle");
+    } else {
+      setIntercom({ tipo: "local", nome: s.name });
+      setCallState("calling");
+      setTimeout(() => setCallState("connected"), 2000);
+    }
+  };
 
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -133,17 +149,11 @@ function MapaPage() {
     const y = ((e.clientY - r.top) / r.height) * 100;
     const s = hitTest(x, y);
     setActive(s);
-    if (s) {
-      const m = s.name.match(/^BLOCO ([ABCD])$/);
-      if (m) {
-        setIntercom({ bloco: m[1], apto: 0 });
-        setCallState("idle");
-      }
-    }
+    if (s) abrirIntercom(s);
   };
 
   const iniciarChamada = (apto: number) => {
-    setIntercom((p) => (p ? { ...p, apto } : p));
+    setIntercom((p) => (p && p.tipo === "bloco" ? { ...p, apto } : p));
     setCallState("calling");
     setTimeout(() => setCallState("connected"), 2000);
   };
