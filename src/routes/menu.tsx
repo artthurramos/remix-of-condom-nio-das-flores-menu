@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BackToMenu } from "@/components/BackToMenu";
 import { Map, DoorOpen, Accessibility, Building2, Dumbbell, Utensils, PartyPopper, Bike, Baby, Trees, Trophy, Shirt } from "lucide-react";
+import { feedback } from "@/lib/feedback";
 
 export const Route = createFileRoute("/menu")({
   component: MenuPage,
@@ -39,6 +40,7 @@ function MenuPage() {
             <Link
               key={label}
               to={to}
+              onClick={() => feedback(label, "open")}
               className="group flex items-start gap-4 rounded-xl border border-neutral-200 bg-white p-5 transition hover:border-neutral-900 hover:shadow-md"
             >
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-neutral-900 text-white">

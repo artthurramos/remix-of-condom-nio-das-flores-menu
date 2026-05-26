@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Menu, Map, DoorOpen, ScanEye } from "lucide-react";
 import hero from "@/assets/hero.jpg";
+import { feedback } from "@/lib/feedback";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -39,6 +40,7 @@ function Index() {
             <Link
               key={to}
               to={to}
+              onClick={() => feedback(label, "open")}
               className="group flex flex-col items-center gap-3 rounded-2xl border border-white/25 bg-white/10 px-6 py-8 backdrop-blur-md transition hover:bg-white/20"
             >
               <span className="grid h-14 w-14 place-items-center rounded-full bg-white/15 ring-1 ring-white/30">
