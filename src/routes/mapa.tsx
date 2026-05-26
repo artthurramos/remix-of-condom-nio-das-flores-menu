@@ -129,7 +129,7 @@ function MapaPage() {
     | { tipo: "local"; nome: string }
     | null
   >(null);
-  const [callState, setCallState] = useState<"idle" | "calling" | "connected">("idle");
+  const [callState, setCallState] = useState<"idle" | "confirm" | "calling" | "connected">("idle");
 
   const abrirIntercom = (s: Spot) => {
     const m = s.name.match(/^BLOCO ([ABCD])$/);
