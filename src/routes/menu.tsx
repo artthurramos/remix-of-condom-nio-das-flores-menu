@@ -41,7 +41,7 @@ function MenuPage() {
               key={label}
               to={to}
               onClick={() => feedback(label, "open")}
-              className="group flex items-start gap-4 rounded-xl border border-neutral-200 bg-white p-5 transition hover:border-neutral-900 hover:shadow-md"
+              className="group flex items-start gap-4 rounded-xl border border-neutral-200 bg-white p-5 transition hover:border-neutral-900 hover:shadow-md focus-visible:outline-none active:ring-4 active:ring-[#c9a84c]/70"
             >
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-neutral-900 text-white">
                 <Icon className="h-5 w-5" />

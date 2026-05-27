@@ -8,10 +8,10 @@ export const Route = createFileRoute("/")({
 });
 
 const items = [
-  { to: "/menu", icon: Menu, label: "Menu", sub: "NAVEGAÇÃO GERAL" },
   { to: "/mapa", icon: Map, label: "Mapa", sub: "LOCALIZAÇÃO" },
   { to: "/entrada", icon: DoorOpen, label: "Entrada", sub: "ACESSO PRINCIPAL" },
   { to: "/acessibilidade", icon: ScanEye, label: "Acessibilidade", sub: "RECURSOS INCLUSIVOS" },
+  { to: "/menu", icon: Menu, label: "Menu", sub: "NAVEGAÇÃO GERAL" },
 ] as const;
 
 function Index() {
@@ -41,7 +41,7 @@ function Index() {
               key={to}
               to={to}
               onClick={() => feedback(label, "open")}
-              className="group flex flex-col items-center gap-3 rounded-2xl border border-white/25 bg-white/10 px-6 py-8 backdrop-blur-md transition hover:bg-white/20"
+              className="group flex flex-col items-center gap-3 rounded-2xl border border-white/25 bg-white/10 px-6 py-8 backdrop-blur-md transition hover:bg-white/20 focus-visible:outline-none active:ring-4 active:ring-[#c9a84c]/70"
             >
               <span className="grid h-14 w-14 place-items-center rounded-full bg-white/15 ring-1 ring-white/30">
                 <Icon className="h-6 w-6" />
