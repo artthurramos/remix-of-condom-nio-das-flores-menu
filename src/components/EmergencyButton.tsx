@@ -14,7 +14,7 @@ export function EmergencyButton() {
 
   const toggle = () => {
     playClick("tap");
-    feedback(open ? "Fechar emergência" : "Emergência", "open");
+    feedback(open ? "Fechar emergência" : "Emergências", "open");
     setOpen(!open);
   };
 
@@ -27,10 +27,13 @@ export function EmergencyButton() {
     <>
       <button
         onClick={toggle}
-        aria-label="Emergência"
-        className="fixed bottom-6 right-6 z-[60] grid h-16 w-16 place-items-center rounded-full bg-red-600 text-white shadow-2xl ring-4 ring-red-600/30 transition hover:bg-red-700 hover:scale-105 animate-pulse"
+        aria-label="Emergências"
+        className="fixed bottom-6 right-6 z-[60] flex items-center gap-3 rounded-2xl border border-white/25 bg-red-600 px-5 py-4 text-white shadow-2xl backdrop-blur-md transition hover:bg-red-700 hover:scale-105"
       >
-        <AlertTriangle className="h-7 w-7" />
+        <span className="grid h-12 w-12 place-items-center rounded-full bg-white/15 ring-1 ring-white/30">
+          <AlertTriangle className="h-6 w-6" />
+        </span>
+        <span className="font-serif text-xl">Emergências</span>
       </button>
 
       {open && (
